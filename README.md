@@ -51,3 +51,27 @@ Output DataSet
 
 This should be the output of the mapreduce program.
 
+## Class Descriptions
+
+### CompositeKey 
+Custom Writable class, which implements WritableComparable interface. It holds DeptId,LName,FName,EmpID.
+
+### Mapper: SSEMapper
+Outputs  key-value pair, Key as CompositeKey(deptId-lastName-firstName-empID) & value as IntWritable.  
+
+### Partitioner: SSEPartitioner
+Partitions data based on deptId hashcode.
+
+### SortingComparator: SSESortingComparator
+Sorting Comparator which sorts keys in map tasks. It sorts keys based on deptID asc, if deptId is same then it will sort keys by lastName-firstName-empID desc order. It extends WritableComparator class. It overrides compare method which compares two keys.
+
+### GroupingComparator: SSEGroupingComparator
+Grouping Comparator which groups keys in reduce tasks. It will group all keys with same deptId. It extends WritableComparator Class. It overrides compare method which compared two keys.
+
+### Reducer: SSEReducer
+Reducer class takes input CompositeKey,Iterator<Int> . for each iterator it will write data to context (deptID-lastName-firstName-empId).
+  
+### Driver: SSEDriver
+Driver class which initializes hadoop mapreduce job with relevant configurations.
+  
+
