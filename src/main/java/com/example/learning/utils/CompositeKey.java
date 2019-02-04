@@ -108,4 +108,9 @@ public class CompositeKey implements Writable, WritableComparable<CompositeKey> 
         this.firstName = dataInput.readUTF();
         this.empId = dataInput.readUTF();
     }
+
+    @Override
+    public int hashCode() {
+        return this.deptId.hashCode();
+    }
 }
